@@ -1,0 +1,39 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  labels:
+    prometheus: federated
+  name: federated
+  namespace: monitoring
+spec:
+#  alerting:
+#    alertmanagers:
+#    - name: alertmanager-main
+#      namespace: monitoring
+#      port: web
+  baseImage: quay.io/prometheus/prometheus
+  nodeSelector:
+    beta.kubernetes.io/os: linux
+  replicas: 1
+  resources:
+    requests:
+      memory: 400Mi
+#  ruleSelector:
+#    matchLabels:
+#      prometheus: k8s
+#      role: alert-rules
+  serviceAccountName: prometheus-k8s
+  serviceMonitorSelector:
+    matchExpressions:
+    - key: federated-prometheus
+      operator: Exists
+  version: v2.2.1
+#  storage:
+#    volumeClaimTemplate:
+#      spec:
+#        selector:
+#          matchLabels:
+#            app: prometheus-prometheus
+#        resources:
+#          requests:
+#            storage: 50Gi

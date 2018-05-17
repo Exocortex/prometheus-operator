@@ -1,0 +1,29 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: metcalfe-prometheus
+  namespace: monitoring
+  labels:
+    federated-prometheus: metcalfe
+    prometheus: federated
+spec:
+  ports:
+  - protocol: TCP
+    port: 9090
+    name: web
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: metcalfe-prometheus
+  namespace: monitoring
+  labels:
+    federated-prometheus: metcalfe
+subsets:
+  - addresses:
+      - ip: 192.168.202.91
+    ports:
+      - port: 31781
+        name: web
+

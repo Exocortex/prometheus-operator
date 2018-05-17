@@ -1,0 +1,29 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: bhs-prometheus
+  namespace: monitoring
+  labels:
+    federated-prometheus: bhs
+    prometheus: federated
+spec:
+  ports:
+  - protocol: TCP
+    port: 9090
+    name: web
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: bhs-prometheus
+  namespace: monitoring
+  labels:
+    federated-prometheus: bhs
+subsets:
+  - addresses:
+      - ip: 192.168.201.101
+    ports:
+      - port: 31017
+        name: web
+

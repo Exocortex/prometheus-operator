@@ -1,0 +1,29 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: forestglade-prometheus
+  namespace: monitoring
+  labels:
+    federated-prometheus: forestglade
+    prometheus: federated
+spec:
+  ports:
+  - protocol: TCP
+    port: 9090
+    name: web
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: forestglade-prometheus
+  namespace: monitoring
+  labels:
+    federated-prometheus: forestglade
+subsets:
+  - addresses:
+      - ip: 192.168.203.81
+    ports:
+      - port: 31259
+        name: web
+
