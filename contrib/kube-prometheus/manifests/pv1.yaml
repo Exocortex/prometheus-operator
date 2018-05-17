@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-prometheus-1
+  labels:
+    app: prometheus-prometheus
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 100Gi
+  nfs:
+    server: 192.168.100.4
+    path: /volume1/threehub/prometheus/prometheus/1
+  persistentVolumeReclaimPolicy: Retain
+

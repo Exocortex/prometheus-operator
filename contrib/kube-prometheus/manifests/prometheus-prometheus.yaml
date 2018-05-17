@@ -28,3 +28,12 @@ spec:
     - key: k8s-app
       operator: Exists
   version: v2.2.1
+  storage:
+    volumeClaimTemplate:
+      spec:
+        selector:
+          matchLabels:
+            app: prometheus-prometheus
+        resources:
+          requests:
+            storage: 50Gi
