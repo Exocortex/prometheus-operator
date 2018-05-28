@@ -28,6 +28,25 @@ spec:
           requests:
             cpu: 100m
             memory: 100Mi
+        env:
+        - name: GF_SMTP_ENABLED
+          value: "true"
+        - name: GF_SMTP_HOST
+          value: smtp.postmarkapp.com:587
+        - name: GF_SMTP_USER
+          valueFrom:
+            secretKeyRef:
+              name: postmark-key
+              key: postmark-key
+        - name: GF_SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postmark-key
+              key: postmark-key
+        - name: GF_SMTP_FROM_ADDRESS
+          value: studio@exocortex.com
+        - name: GF_FROM_NAME
+          value: "Exocortex Grafana"
         volumeMounts:
         - mountPath: /var/lib/grafana
           name: grafana-storage
@@ -46,7 +65,8 @@ spec:
         runAsUser: 65534
       serviceAccountName: grafana
       volumes:
-      - emptyDir: {}
+      - persistentVolumeClaim:
+          claimName: grafana
         name: grafana-storage
       - configMap:
           name: grafana-datasources
