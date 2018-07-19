@@ -4,17 +4,16 @@ metadata:
   name: grafana
   namespace: monitoring
   annotations:
-    ingress.kubernetes.io/whitelist-source-range: 192.168.0.0/16,72.139.115.142/32,198.199.67.129/32
     certmanager.k8s.io/acme-challenge-type: dns01
     certmanager.k8s.io/acme-dns01-provider: route53-dns01
     certmanager.k8s.io/cluster-issuer: route53-dns01-issuer
 spec:
   tls:
   - hosts:
-    - grafana.threehub.net
-    secretName: grafana.threehub.net
+    - grafana.threehub.com
+    secretName: grafana.threehub.com
   rules:
-  - host: grafana.threehub.net
+  - host: grafana.threehub.com
     http:
       paths:
       - backend:
